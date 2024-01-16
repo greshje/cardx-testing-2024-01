@@ -1,6 +1,5 @@
 package org.nachc.cardxtest.tests;
 
-import org.junit.Test;
 import org.nachc.cardxtest.params.CardxTestParams;
 
 import com.nach.core.util.http.HttpRequestClient;
@@ -10,8 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class T01_AllSmbp {
 
-	@Test
-	public void runTest() {
+	public static void main(String[] args) {
+		runTest();
+	}
+	
+	public static void runTest() {
 		// get the test strings and test patient ids
 		Integer[] patientIdList = CardxTestParams.getPatientIdList();
 		String[] testStringList = CardxTestParams.getTestStrings();
@@ -25,7 +27,7 @@ public class T01_AllSmbp {
 		log.info("Done.");
 	}
 
-	private void doTest(String testString, Integer patientId) {
+	private static void doTest(String testString, Integer patientId) {
 		testString = CardxTestParams.setPatientId(testString);
 		log.info(testString);
 		// create the url
@@ -42,7 +44,7 @@ public class T01_AllSmbp {
 		log.info("---");
 	}
 	
-	private String getMsg(String testString) {
+	private static String getMsg(String testString) {
 		String rtn = "";
 		rtn += "\n\n\n";
 		rtn += "\n* ---";

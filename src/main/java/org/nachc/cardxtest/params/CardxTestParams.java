@@ -2,11 +2,13 @@ package org.nachc.cardxtest.params;
 
 import com.nach.core.util.http.HttpRequestClient;
 
+import ca.uhn.fhir.context.FhirContext;
+
 public class CardxTestParams {
 
 	public static String getBaseUrl() {
-		return "https://api.logicahealth.org/CardXHTNMG/open";
-		// return "https://cobratestapimgt.azure-api.net/hecapreg/demo";
+		// return "https://api.logicahealth.org/CardXHTNMG/open";
+		return "https://cobratestapimgt.azure-api.net/hecapreg/demo";
 	}
 	
 	public static String getPatientUrl() {
@@ -61,6 +63,10 @@ public class CardxTestParams {
 		HttpRequestClient client = new HttpRequestClient(url);
 		client.addHeader("Ocp-Apim-Subscription-Key", "76104a687e5e497e9466f660bdd30e7f");
 		return client;
+	}
+	
+	public static FhirContext getFhirContext() {
+		return FhirContext.forR4();
 	}
 	
 }

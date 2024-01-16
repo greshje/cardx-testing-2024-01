@@ -7,6 +7,7 @@ import org.nachc.cardxtest.params.CardxTestParams;
 
 import com.nach.core.util.file.FileUtil;
 import com.nach.core.util.http.HttpRequestClient;
+import com.nach.core.util.json.JsonUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +49,7 @@ public class UploadResources {
 	
 	private static void uploadFile(File file) {
 		String json = FileUtil.getAsString(file);
+		json = JsonUtil.prettyPrint(json);
 		String url = CardxTestParams.getObservationUrl();
 		log.info("URL: \n" + url);
 		HttpRequestClient client = CardxTestParams.getClient(url);
@@ -55,7 +57,16 @@ public class UploadResources {
 		client.doPost(json);
 		int status = client.getStatusCode();
 		String response = client.getResponse();
+		log.info("---");
+		log.info("File: " + file.getName());
 		log.info("Status: " + status);
+		log.info("---");
+		log.info("Request: \n" + json);
+		log.info("Response: \n" + response);
+		log.info("---");
+		log.info("File: " + file.getName());
+		log.info("Status: " + status);
+		log.info("---");
 		if(status != 201) {
 			FAILS.add(file);
 		} else {
