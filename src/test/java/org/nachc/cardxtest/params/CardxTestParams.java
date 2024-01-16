@@ -14,6 +14,14 @@ public class CardxTestParams {
 		return 14772;
 	}
 	
+	public static Integer[] getPatientIdList() {
+		Integer[] rtn = {
+			14772,
+			14775
+		};
+		return rtn;
+	}
+	
 	public static String setPatientId(String str) {
 		String rtn = str.replace("<PATIENT_ID>", getPatientId() + "");
 		return rtn;

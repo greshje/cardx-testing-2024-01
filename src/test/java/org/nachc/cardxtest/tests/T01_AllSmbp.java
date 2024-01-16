@@ -12,24 +12,33 @@ public class T01_AllSmbp {
 
 	@Test
 	public void runTest() {
-		// create the test string
+		// get the test strings and test patient ids
+		Integer[] patientIdList = CardxTestParams.getPatientIdList();
 		String[] testStringList = CardxTestParams.getTestStrings();
-		for (String testString : testStringList) {
-			testString = CardxTestParams.setPatientId(testString);
-			log.info(getMsg(testString));
-			// create the url
-			String url = "";
-			url += CardxTestParams.getBaseUrl();
-			url += testString;
-			log.info("URL: \n" + url);
-			HttpRequestClient client = new HttpRequestClient(url);
-			client.doGet();
-			String response = client.getResponse();
-			log.info("Response: \n" + response);
+		for(Integer patientId : patientIdList) {
+			log.info("---------------------------------------------------------------------------------");
+			log.info("PATIENT_ID: " + patientId);
+			for (String testString : testStringList) {
+				doTest(testString, patientId);
+			}
 		}
 		log.info("Done.");
 	}
 
+	private void doTest(String testString, Integer patientId) {
+		testString = CardxTestParams.setPatientId(testString);
+		log.info(getMsg(testString));
+		// create the url
+		String url = "";
+		url += CardxTestParams.getBaseUrl();
+		url += testString;
+		log.info("URL: \n" + url);
+		HttpRequestClient client = new HttpRequestClient(url);
+		client.doGet();
+		String response = client.getResponse();
+		log.info("Response: \n" + response);
+	}
+	
 	private String getMsg(String testString) {
 		String rtn = "";
 		rtn += "\n\n\n";
