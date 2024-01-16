@@ -1,13 +1,21 @@
 package org.nachc.cardxtest.params;
 
+import com.nach.core.util.http.HttpRequestClient;
+
 public class CardxTestParams {
 
 	public static String getBaseUrl() {
 		return "https://api.logicahealth.org/CardXHTNMG/open";
+		// return "https://cobratestapimgt.azure-api.net/hecapreg/demo";
 	}
 	
 	public static String getPatientUrl() {
-		return "https://api.logicahealth.org/CardXHTNMG/open/Patient";
+		return getBaseUrl() + "/Patient";
+	}
+	
+	public static String getObservationUrl() {
+		// return getBaseUrl() + "";
+		return getBaseUrl() + "/Observation";
 	}
 	
 	public static int getPatientId() {
@@ -40,4 +48,19 @@ public class CardxTestParams {
 		};
 		return rtn;
 	}
+	
+	public static String getTestFolderName() {
+		return "./Test-Package-14772";
+	}
+	
+	public static String getOauthToken() {
+		return "76104a687e5e497e9466f660bdd30e7f";
+	}
+	
+	public static HttpRequestClient getClient(String url) {
+		HttpRequestClient client = new HttpRequestClient(url);
+		client.addHeader("Ocp-Apim-Subscription-Key", "76104a687e5e497e9466f660bdd30e7f");
+		return client;
+	}
+	
 }

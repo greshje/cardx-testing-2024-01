@@ -27,16 +27,19 @@ public class T01_AllSmbp {
 
 	private void doTest(String testString, Integer patientId) {
 		testString = CardxTestParams.setPatientId(testString);
-		log.info(getMsg(testString));
+		log.info(testString);
 		// create the url
 		String url = "";
 		url += CardxTestParams.getBaseUrl();
 		url += testString;
 		log.info("URL: \n" + url);
-		HttpRequestClient client = new HttpRequestClient(url);
+		HttpRequestClient client = CardxTestParams.getClient(url);
 		client.doGet();
 		String response = client.getResponse();
-		log.info("Response: \n" + response);
+		int status = client.getStatusCode();
+		log.info("---");
+		log.info("Status: " + status);
+		log.info("---");
 	}
 	
 	private String getMsg(String testString) {
