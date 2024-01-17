@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GetUploadedObservations {
 
-	private static final String FILE_NAME = "./output/obsId-2024-01-16.txt";
+	private static final String FILE_NAME = "./output/obsId.txt";
 	
 	private static final Integer SUCCESS_COUNT = 57;
 	
@@ -51,6 +51,8 @@ public class GetUploadedObservations {
 				FAIL.add(obsId);
 			}
 		}
+		log.info("==============================================================");
+		log.info("DONE WITH TESTS:");
 		log.info("EXPECTED: " + SUCCESS_COUNT);
 		log.info("SUCCESS:  " + SUCCESS.size());
 		log.info("FAIL:     " + FAIL.size());
