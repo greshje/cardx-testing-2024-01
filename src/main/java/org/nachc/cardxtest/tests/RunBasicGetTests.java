@@ -7,7 +7,7 @@ import com.nach.core.util.http.HttpRequestClient;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class T01_AllSmbp {
+public class RunBasicGetTests {
 
 	public static void main(String[] args) {
 		runTest();

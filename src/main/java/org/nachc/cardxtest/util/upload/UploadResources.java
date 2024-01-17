@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.nachc.cardxtest.params.CardxTestParams;
+import org.nachc.cardxtest.util.fhir.GetIdFromObservationResponse;
 
 import com.nach.core.util.file.FileUtil;
 import com.nach.core.util.http.HttpRequestClient;
@@ -16,7 +17,11 @@ public class UploadResources {
 
 	private static ArrayList<File> FAILS = new ArrayList<File>();
 	
-	private static int CNT;
+	private static final ArrayList<String> OBS_ID_LIST = new ArrayList<String>();
+	
+	private static final String OUTPUT_FILE_DIR = "src/main/resources/output";
+	
+	private static final String OUTPUT_FILE_NAME = "obsId.txt";
 	
 	public static void main(String[] args) {
 		doUpload();
@@ -26,6 +31,7 @@ public class UploadResources {
 		uploadDir("SMBP Average Observation WITHOUT References Individual SMBP Readings");
 		uploadDir("SMBP Heart Rate Readings");
 		uploadDir("SMBP Individual Readings");
+		writeIdFile();
 	}
 	
 	private static void uploadDir(String subDirName) {
@@ -43,7 +49,7 @@ public class UploadResources {
 			log.info(file.getName());
 		}
 		log.info("NUMBER OF FAILS:    " + FAILS.size());
-		log.info("SUCCESSFUL UPLOADS: " + CNT);
+		log.info("SUCCESSFUL UPLOADS: " + OBS_ID_LIST.size());
 		log.info("Done.");
 	}
 	
@@ -70,8 +76,41 @@ public class UploadResources {
 		if(status != 201) {
 			FAILS.add(file);
 		} else {
-			CNT++;
+			String obsId = GetIdFromObservationResponse.getId(response);
+			if(obsId != null) {
+				OBS_ID_LIST.add(obsId);
+			}
 		}
 	}
 	
+	private static void writeIdFile() {
+		try {
+			log.info("Writing output file...");
+			String idList = getIdList();
+			File dir = FileUtil.getFromProjectRoot(OUTPUT_FILE_DIR);
+			FileUtil.mkdirs(dir);
+			File file = new File(dir, OUTPUT_FILE_NAME);
+			log.info("dir exists:  " + dir.exists());
+			log.info("file exists: " + file.exists());
+			if(file.exists() == true) {
+				file.delete();
+			}
+			file.createNewFile();
+			FileUtil.write(idList, file);
+			log.info("Done creating output file.");
+		} catch(Exception exp) {
+			throw new RuntimeException(exp);
+		}
+	}
+	
+	private static String getIdList() {
+		String rtn = "";
+		for(String str : OBS_ID_LIST) {
+			if("".equals(rtn) == false) {
+				rtn += ",";
+			}
+			rtn += str;
+		}
+		return rtn;
+	}
 }

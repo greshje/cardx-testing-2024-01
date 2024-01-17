@@ -7,8 +7,8 @@ import ca.uhn.fhir.context.FhirContext;
 public class CardxTestParams {
 
 	public static String getBaseUrl() {
-		// return "https://api.logicahealth.org/CardXHTNMG/open";
-		return "https://cobratestapimgt.azure-api.net/hecapreg/demo";
+		return "https://api.logicahealth.org/CardXHTNMG/open";
+		// return "https://cobratestapimgt.azure-api.net/hecapreg/demo";
 	}
 	
 	public static String getPatientUrl() {
@@ -16,7 +16,6 @@ public class CardxTestParams {
 	}
 	
 	public static String getObservationUrl() {
-		// return getBaseUrl() + "";
 		return getBaseUrl() + "/Observation";
 	}
 	
